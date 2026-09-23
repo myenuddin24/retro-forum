@@ -7,8 +7,8 @@ const loadData = async () => {
 
 
 const displayData = (posts) => {
+  const discussionCard = document.getElementById('discussion-card');
   posts.forEach(post => {
-    const discussionCard = document.getElementById('discussion-card');
     const cardDiv = document.createElement('div');
     cardDiv.innerHTML = `
          <div class="card card-side bg-[#797DFC1a] lg:p-8 p-4 gap-6 mb-6 items-start">
@@ -87,8 +87,54 @@ const addMarkAsRead = (post) => {
   const readCount = document.getElementById('read-count');
   const countText = readCount.innerText;
   const countValue = parseInt(countText);
-  let newCountValue =  countValue + 1;
+  let newCountValue = countValue + 1;
   readCount.innerText = newCountValue;
 }
 
+const loadLatestPosts = async () => {
+  const res = await fetch(' https://openapi.programming-hero.com/api/retro-forum/latest-posts');
+  const data = await res.json();
+  displayLatestPosts(data);
+}
+
+
+const displayLatestPosts = (posts) => {
+  const latestPosts = document.getElementById('latest-posts');
+  posts.forEach((post) => {
+    const postDiv = document.createElement('div');
+    postDiv.innerHTML = `
+      <div class="card shadow-sm h-full">
+        <figure class="px-5 pt-5">
+          <img src="${post?.cover_image}" alt="" class="rounded-xl" />
+        </figure>
+        <div class="card-body">
+          <div class="flex items-center justify-start gap-2">
+            <img class="w-5 h-5" src="images/Frame.png" alt="">
+            <p class="text-xs text-[#12132D99]">${post?.author?.posted_date ?? 'No publish date'}</p>
+          </div>
+          <h2 class="card-title text-lg text-[#12132D] font-extrabold">
+           ${post?.title}
+          </h2>
+          <p class="text-base text-[#12132D99]">
+            ${post?.description}
+          </p>
+          <div class="flex items-center gap-4">
+            <img class="w-10 h-10 rounded-full" src="${post?.profile_image}" alt="">
+            <div>
+              <h3 class="text-base font-bold text-[#12132D]">
+                ${post?.author?.name}
+              </h3>
+              <p class="text-sm text-[#12132D99]">
+                ${post?.author?.designation ?? 'Unknown'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
+    latestPosts.appendChild(postDiv);
+  });
+}
+
 loadData();
+loadLatestPosts();
