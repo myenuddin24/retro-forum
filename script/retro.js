@@ -8,7 +8,6 @@ const loadData = async () => {
 
 const displayData = (posts) => {
   posts.forEach(post => {
-    console.log(post)
     const discussionCard = document.getElementById('discussion-card');
     const cardDiv = document.createElement('div');
     cardDiv.innerHTML = `
@@ -77,8 +76,8 @@ const addMarkAsRead = (post) => {
   const div = document.createElement('div');
   div.className = 'flex items-center justify-between bg-[#ffffff] p-4 w-full rounded-lg';
   div.innerHTML = `
-    <P class="text-base font-semibold">${post?.title}</P>
-    <div class="flex items-center gap-2">
+    <P class="text-base font-semibold w-fit">${post?.title}</P>
+    <div class="flex items-center lg:gap-2">
       <img class="lg:w-5 lg:h-5 w-4 h-4" src="images/Group 16.png" alt="">
       <p class="inter text-xs text-[#12132D99]">${post?.view_count}</p>
     </div>
