@@ -8,7 +8,7 @@ const loadData = async () => {
 
 const displayData = (posts) => {
   posts.forEach(post => {
-    console.log(post);
+    console.log(post)
     const discussionCard = document.getElementById('discussion-card');
     const cardDiv = document.createElement('div');
     cardDiv.innerHTML = `
@@ -47,7 +47,7 @@ const displayData = (posts) => {
                     </div>
                   </div>
                   <div class="card-actions justify-end">
-                    <button class="btn btn-circle w-6 h-6">
+                    <button id="mark-btn" class="btn btn-circle w-6 h-6">
                       <img class="w-6 h-6" src="images/Group 40106.png" alt="">
                     </button>
                   </div>
@@ -57,6 +57,11 @@ const displayData = (posts) => {
         `
     discussionCard.appendChild(cardDiv);
 
+    const markBtn = cardDiv.querySelector('#mark-btn');
+    markBtn.addEventListener('click', () => {
+      addMarkAsRead(post);
+    });
+
     const activeStatus = cardDiv.querySelector('#active-status');
     if (post.isActive) {
       activeStatus.classList.add('bg-[#10B981]')
@@ -64,6 +69,27 @@ const displayData = (posts) => {
       activeStatus.classList.add('bg-[#FF3434]')
     }
   });
+}
+
+
+const addMarkAsRead = (post) => {
+  const markAsRead = document.getElementById('mark-as-read');
+  const div = document.createElement('div');
+  div.className = 'flex items-center justify-between bg-[#ffffff] p-4 w-full rounded-lg';
+  div.innerHTML = `
+    <P class="text-base font-semibold">${post?.title}</P>
+    <div class="flex items-center gap-2">
+      <img class="lg:w-5 lg:h-5 w-4 h-4" src="images/Group 16.png" alt="">
+      <p class="inter text-xs text-[#12132D99]">${post?.view_count}</p>
+    </div>
+  `
+  markAsRead.appendChild(div);
+
+  const readCount = document.getElementById('read-count');
+  const countText = readCount.innerText;
+  const countValue = parseInt(countText);
+  let newCountValue =  countValue + 1;
+  readCount.innerText = newCountValue;
 }
 
 loadData();
