@@ -8,6 +8,17 @@ const loadData = async () => {
 
 const displayData = (posts) => {
   const discussionCard = document.getElementById('discussion-card');
+  discussionCard.textContent = '';
+
+  if (posts.length === 0) {
+    discussionCard.innerHTML = `
+      <div class="text-center lg:mt-5">
+        <p class="lg:text-2xl text-lg font-bold text-[#12132D99]">No Data Available</p>
+      </div>
+    `
+    return;
+  };
+
   posts.forEach(post => {
     const cardDiv = document.createElement('div');
     cardDiv.innerHTML = `
@@ -91,6 +102,7 @@ const addMarkAsRead = (post) => {
   readCount.innerText = newCountValue;
 }
 
+
 const loadLatestPosts = async () => {
   const res = await fetch(' https://openapi.programming-hero.com/api/retro-forum/latest-posts');
   const data = await res.json();
@@ -135,6 +147,22 @@ const displayLatestPosts = (posts) => {
     latestPosts.appendChild(postDiv);
   });
 }
+
+
+const handleSearch = () => {
+  const searchInput = document.getElementById('search-input');
+  const searchedText = searchInput.value;
+  displaySearchedPosts(searchedText);
+}
+
+
+const displaySearchedPosts = async (searchedText) => {
+  const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts?category=${searchedText}`);
+  const data = await res.json();
+  const searchedPosts = data.posts;
+  displayData(searchedPosts);
+}
+
 
 loadData();
 loadLatestPosts();
