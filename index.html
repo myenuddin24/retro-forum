@@ -95,8 +95,19 @@
       </div>
 
       <div class="flex lg:flex-row flex-col gap-6">
-        <!-- discussion card -->
-        <div id="discussion-card" class="lg:w-3/5 w-full"></div>
+        <div class="lg:w-3/5 w-full">
+          <!-- discussion card -->
+          <div id="discussion-card"></div>
+
+          <!-- Loading spinner -->
+          <div id="loading-spinner" class="hidden text-center">
+            <span class="loading loading-bars loading-xs"></span>
+            <span class="loading loading-bars loading-sm"></span>
+            <span class="loading loading-bars loading-md"></span>
+            <span class="loading loading-bars loading-lg"></span>
+            <span class="loading loading-bars loading-xl"></span>
+          </div>
+        </div>
 
         <!-- mark as read -->
         <div id="mark-as-read"

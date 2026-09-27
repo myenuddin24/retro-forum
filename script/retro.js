@@ -1,9 +1,16 @@
 const loadData = async () => {
-  const res = await fetch(' https://openapi.programming-hero.com/api/retro-forum/posts');
-  const data = await res.json();
-  const posts = data.posts;
-  displayData(posts);
-}
+  const loadingSpinner = document.getElementById('loading-spinner');
+  loadingSpinner.classList.remove('hidden');
+
+  setTimeout(async () => {
+    const res = await fetch(' https://openapi.programming-hero.com/api/retro-forum/posts');
+    const data = await res.json();
+    const posts = data.posts;
+    displayData(posts);
+
+    loadingSpinner.classList.add('hidden');
+  }, 2000);
+};
 
 
 const displayData = (posts) => {
@@ -157,11 +164,21 @@ const handleSearch = () => {
 
 
 const displaySearchedPosts = async (searchedText) => {
-  const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts?category=${searchedText}`);
-  const data = await res.json();
-  const searchedPosts = data.posts;
-  displayData(searchedPosts);
-}
+  const discussionCard = document.getElementById('discussion-card');
+  discussionCard.textContent = '';
+
+  const loadingSpinner = document.getElementById('loading-spinner');
+  loadingSpinner.classList.remove('hidden');
+
+  setTimeout(async () => {
+    const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts?category=${searchedText}`);
+    const data = await res.json();
+    const searchedPosts = data.posts;
+    displayData(searchedPosts);
+
+    loadingSpinner.classList.add('hidden');
+  }, 2000);
+};
 
 
 loadData();
